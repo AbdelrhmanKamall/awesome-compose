@@ -7,6 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using Microsoft.Extensions.Caching.StackExchangeRedis;
+using Microsoft.Extensions.Caching.Distributed;
+
 namespace aspnetapp
 {
     public class Startup
@@ -28,6 +31,14 @@ namespace aspnetapp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // Add the Redis cache configuration here
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetValue<string>("CacheSettings:RedisCache");
+            });
+
+            // Register IDistributedCache to use RedisCache
+            services.Add(ServiceDescriptor.Singleton<IDistributedCache, RedisCache>());
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllers();
