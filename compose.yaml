@@ -4,6 +4,10 @@ services:
     build: app/aspnetapp
     ports:
       - 80:80
+    depends_on:
+      - db
+      - mongodb
+      - redis
   mongodb:
     image: mongo
     container_name: mongodb

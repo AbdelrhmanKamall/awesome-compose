@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MongoDB.Driver;
 
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Caching.Distributed;
@@ -31,17 +32,23 @@ namespace aspnetapp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            // Add the Redis cache configuration here
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.Configuration = Configuration.GetValue<string>("CacheSettings:RedisCache");
+             // Load Redis connection string from appsettings.json
+             var redisConnectionString = Configuration.GetConnectionString("RedisConnection");
+             
+             // Register Redis distributed cache
+             services.AddStackExchangeRedisCache(options =>
+             {
+                options.Configuration = redisConnectionString;
             });
-
-            // Register IDistributedCache to use RedisCache
-            services.Add(ServiceDescriptor.Singleton<IDistributedCache, RedisCache>());
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllers();
+
+            var mongoSettings = Configuration.GetConnectionString("MongoDBConnection");
+            
+            // Register MongoDB client in DI container
+            services.AddSingleton<IMongoClient>(provider => new MongoClient(mongoSettings));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
