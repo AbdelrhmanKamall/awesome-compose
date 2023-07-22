@@ -1,9 +1,9 @@
 #  Welcome to the new containerized .NET app deployment through Amazon ECS
 
-![image](../awesome-compose/imgs/Screenshot%202023-07-22%20174658.png)  
 ![image](../awesome-compose/imgs/1.png)  
-![image](../awesome-compose/imgs/2.png)
-![image](../awesome-compose/imgs/Screenshot%202023-07-22%20172849.png)
+![image](../awesome-compose/imgs/2.png)  
+![image](../awesome-compose/imgs/3.png)  
+![image](../awesome-compose/imgs/4.png)  
 
 ## Redis as a Cache Store
 Redis (Remote Dictionary Server) is an in-memory data structure store that is known for its high-speed read and write capabilities, making it suitable as a database, cache, and message broker. It can handle large amounts of data, making it popular as a cache store. Redis can serve as a distributed cache, enabling multiple application instances to share cache data. It offers features like cache expiration and eviction policies to remove outdated or unused cache items automatically.  
