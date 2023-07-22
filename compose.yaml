@@ -33,3 +33,4 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Complex123Password' -Q 'SELECT 1' || exit 1"]
     
+    aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 407135729116.dkr.us-west-2.amazonaws.com
